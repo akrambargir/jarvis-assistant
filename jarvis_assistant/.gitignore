@@ -5,6 +5,7 @@
 .packages
 build/
 *.iml
+android/local.properties
 
 # Rust
 target/
