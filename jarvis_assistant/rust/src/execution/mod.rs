@@ -121,10 +121,14 @@ impl SystemControlLayer {
     fn gate(&mut self, action: &str) -> Option<ExecutionResult> {
         let result = self.safety.validate(action, PermissionCategory::OsControl);
         if !result.approved {
-            Some(ExecutionResult::denied(format!(
-                "Safety denied: {}",
-                result.reason.unwrap_or_default()
-            )))
+            let reason = if result.ethics_violation.is_some() {
+                "ethics violation".to_string()
+            } else if result.permission_denied {
+                "permission denied".to_string()
+            } else {
+                "safety check failed".to_string()
+            };
+            Some(ExecutionResult::denied(format!("Safety denied: {reason}")))
         } else {
             None
         }
@@ -181,10 +185,14 @@ impl BrowserAutomationEngine {
     fn gate(&mut self, action: &str) -> Option<ExecutionResult> {
         let result = self.safety.validate(action, PermissionCategory::Browser);
         if !result.approved {
-            Some(ExecutionResult::denied(format!(
-                "Safety denied: {}",
-                result.reason.unwrap_or_default()
-            )))
+            let reason = if result.ethics_violation.is_some() {
+                "ethics violation".to_string()
+            } else if result.permission_denied {
+                "permission denied".to_string()
+            } else {
+                "safety check failed".to_string()
+            };
+            Some(ExecutionResult::denied(format!("Safety denied: {reason}")))
         } else {
             None
         }
@@ -263,10 +271,14 @@ impl IoTController {
         let action = format!("iot:{device_id}:{command}");
         let result = self.safety.validate(&action, PermissionCategory::Other);
         if !result.approved {
-            return ExecutionResult::denied(format!(
-                "Safety denied: {}",
-                result.reason.unwrap_or_default()
-            ));
+            let reason = if result.ethics_violation.is_some() {
+                "ethics violation".to_string()
+            } else if result.permission_denied {
+                "permission denied".to_string()
+            } else {
+                "safety check failed".to_string()
+            };
+            return ExecutionResult::denied(format!("Safety denied: {reason}"));
         }
         ExecutionResult::ok(format!("[IoT] sent '{command}' to device '{device_id}'"))
     }
@@ -313,10 +325,14 @@ impl RPAEngine {
         let action = format!("rpa:play:{workflow_id}");
         let result = self.safety.validate(&action, PermissionCategory::OsControl);
         if !result.approved {
-            return ExecutionResult::denied(format!(
-                "Safety denied: {}",
-                result.reason.unwrap_or_default()
-            ));
+            let reason = if result.ethics_violation.is_some() {
+                "ethics violation".to_string()
+            } else if result.permission_denied {
+                "permission denied".to_string()
+            } else {
+                "safety check failed".to_string()
+            };
+            return ExecutionResult::denied(format!("Safety denied: {reason}"));
         }
         if self.workflows.iter().any(|w| w.id == workflow_id) {
             ExecutionResult::ok(format!("[RPA] played workflow: {workflow_id}"))
