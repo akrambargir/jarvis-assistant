@@ -1,0 +1,11 @@
+// Android build stub — full configuration added in Phase 1 platform setup
+android {
+    compileSdk 34
+    defaultConfig {
+        applicationId "com.example.jarvis_assistant"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+}

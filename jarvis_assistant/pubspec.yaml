@@ -1,0 +1,25 @@
+name: jarvis_assistant
+description: A Jarvis-level personal AI assistant with Ayanokoji persona.
+version: 1.0.0+1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.10.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_rust_bridge: ^2.0.0
+  sqflite: ^2.3.0
+  path_provider: ^2.1.0
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  ffigen: ^9.0.0
+
+flutter:
+  uses-material-design: true

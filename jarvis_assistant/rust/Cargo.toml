@@ -1,0 +1,20 @@
+[package]
+name = "jarvis_core"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "jarvis_core"
+crate-type = ["cdylib", "staticlib"]
+
+[features]
+llm-native = ["llama-cpp-2"]
+
+[dependencies]
+flutter_rust_bridge = "2"
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+llama-cpp-2 = { version = "0.1", optional = true }
+
+[build-dependencies]
+flutter_rust_bridge_codegen = "2"
