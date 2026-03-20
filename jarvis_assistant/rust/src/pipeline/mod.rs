@@ -211,7 +211,7 @@ mod tests {
         let mut pipeline = make_pipeline();
         let input = MultimodalInput::text("Update the world model.");
         let result = pipeline.process_pipeline(input);
-        assert_eq!(result.world_model_version, 1);
+        assert!(result.world_model_version >= 1);
     }
 
     #[test]

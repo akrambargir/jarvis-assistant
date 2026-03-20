@@ -395,6 +395,7 @@ mod tests {
     #[test]
     fn browser_navigate_returns_success() {
         let mut browser = BrowserAutomationEngine::new();
+        browser.safety.permissions.grant(PermissionCategory::Browser);
         let result = browser.navigate("https://example.com");
         assert!(result.success);
     }
@@ -402,6 +403,7 @@ mod tests {
     #[test]
     fn iot_send_command_returns_success() {
         let mut iot = IoTController::new();
+        iot.safety.permissions.grant(PermissionCategory::Other);
         let result = iot.send_command("light-01", "turn_on");
         assert!(result.success);
     }
@@ -409,6 +411,7 @@ mod tests {
     #[test]
     fn rpa_record_and_play_workflow() {
         let mut rpa = RPAEngine::new();
+        rpa.safety.permissions.grant(PermissionCategory::OsControl);
         let wf = rpa.record_workflow("test", vec!["click #btn".to_string()]);
         let result = rpa.play_workflow(&wf.id);
         assert!(result.success);
